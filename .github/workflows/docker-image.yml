@@ -13,18 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: 👁️ Checkout Code
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Docker login
+    - name: 🔐 Docker Login
       env: 
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWROD: ${{ secrets.DOCKER_PASSWROD }}
       run: |
-        echo "🧃 Autenticacion..."
         docker login -u $DOCKER_USER -p $DOCKER_PASSWROD
-        echo "💁‍♂️ Finalizando autenticacion..."
 
-      # run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: 🏗️ Build Docker Image
+      run: |
+        docker build --tag miltoncodeyt/graphql-actions:0.0.2 .
+    
+    - name: 🚀 Push Docker Image
+      run: |
+        docker push miltoncodeyt/graphql-actions:0.0.2
